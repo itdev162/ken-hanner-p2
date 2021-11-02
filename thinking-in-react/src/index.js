@@ -1,6 +1,63 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+const ProductCategoryRow = props => {
+  const { product } = props;
+
+  return (
+    <tr>
+      <th colSPan="2">
+        {product.category}
+      </th>
+    </tr>
+  )
+}
+
+const ProductRow = props => {
+  const { product } = props;
+  const coloredName = product.stocked ?
+    product.name :
+    <span style={{ color: "red"}}>{product.name}</span>;
+
+  return (
+    <tr>
+      <td>{coloredName}</td><td align="right">{product.price}</td>
+    </tr>
+  );
+};
+
+const ProductTable = props => {
+  const { products } = props;
+  const rows = [];
+  let lastCategory = null;
+
+  products.forEach(product => {
+    if (product.category !== lastCategory) {
+      rows.push(
+        <ProductCategoryRow 
+          product={product}
+          key={product.category}
+        />
+      );
+    }    
+    rows.push(<ProductRow product={product} key={product.name} />);
+    lastCategory = product.category;
+  });
+
+  return (
+    <table width="100%">
+      <thead>
+        <tr style={{ color: "blue"}}>
+          <th align="left">Name</th><th align="right">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+      </tbody>
+    </table>
+  )
+}
+
 const SearchBar = () => {
   return (
     <form>
