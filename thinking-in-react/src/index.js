@@ -65,13 +65,30 @@ const ProductTable = props => {
 }
 
 const SearchBar = props => {
-  const { filterText, inStockOnly } = props;
+
+
+  const { 
+    filterText, 
+    inStockOnly,
+    onFilterTextChange,
+    onInStockOnlyChange
+  
+  } = props;
 
   return (
     <form>
-      <input type="text" placeholder="Search..." value={filterText} />
+      <input 
+        type="text" 
+        placeholder="Search..."
+        value={filterText}
+        onChange={event => onFilterTextChange(event.target.value)}
+        />
       <p>
-        <input type="checkbox" checked={inStockOnly} />
+        <input 
+          type="checkbox" 
+          checked={inStockOnly} 
+          onChange={event => onInStockOnlyChange(event.target.checked)}
+        />
         {" "}
         <span style={{ color: "green", fontSize: "smaller" }}>
           Only show products in stock
@@ -86,11 +103,21 @@ const FilterableProductTable = props => {
   const [inStockOnly, setInStockOnly] = useState(false);
   const { products } = props;
 
+  const handleFilterTextChange = filterText => {
+    setFilterText(filterText);
+  };
+
+  const handleInStockOnlyChange = inStockOnly => {
+    setInStockOnly(inStockOnly);
+  };
+
   return (
     <div style={{ fontFamily: "sans-serif"}}>
       <SearchBar 
         filterText={filterText}
         inStockOnly={inStockOnly}      
+        onFilterTextChange={handleFilterTextChange}
+        onInStockOnlyChange={handleInStockOnlyChange}      
       />
       <ProductTable
         products={products}
