@@ -1,1 +1,1 @@
-# ken-hanner-p2
+# Ken Hanner, ITDEV162 Project 2
